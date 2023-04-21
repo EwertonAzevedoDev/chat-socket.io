@@ -11,6 +11,7 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.broadcast.emit('user-connected', "Novo usuario se conectou!");
 
   socket.on('chat message', (msg) => {
     console.log('message: ' + msg);
