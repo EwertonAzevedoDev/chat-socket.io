@@ -10,11 +10,14 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.broadcast.emit('user-connected', "Novo usuario se conectou!");
+  
+  socket.on('entrar', (nickname) => {
+    console.log(nickname + ' Conectou-se!');
+    socket.broadcast.emit('user-connected', nickname + ' Conectou-se!');
+  }); 
 
   socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
+    console.log(msg.nick + ": " + msg.msg);
     io.emit('chat message', msg);
   });
 
