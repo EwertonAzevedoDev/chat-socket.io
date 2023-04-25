@@ -61,6 +61,10 @@
         e.preventDefault();
         if (input.value) {
           socket.emit('chat message', {nick:nickname,msg:input.value});
+          var item = document.createElement('li');
+          item.textContent = nickname + ": " + input.value;
+          messages.appendChild(item);
+          window.scrollTo(0, document.body.scrollHeight);
           input.value = '';
         }
       });

@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', (msg) => {
     console.log(msg.nick + ": " + msg.msg);
-    io.emit('chat message', msg);
+    socket.broadcast.emit('chat message', msg);
   });
 
   socket.on('disconnect', () => {
