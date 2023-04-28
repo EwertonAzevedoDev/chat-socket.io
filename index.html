@@ -19,7 +19,7 @@
       #messages > li { padding: 0.5rem 1rem; }
       #messages > li:nth-child(odd) { background: #efefef; }
 
-      #userTyping { background: rgba(53, 146, 233, 0.15); display: flex; padding: 0.25rem; position: fixed; bottom: 48px; left: 0; right: 0; display: flex; height: 2rem; box-sizing: border-box; backdrop-filter: blur(10px); }
+      #userTyping { background: rgba(53, 146, 233, 0.15); padding: 0.25rem; position: fixed; bottom: 48px; left: 0; right: 0; display: none; height: 2rem; box-sizing: border-box; backdrop-filter: blur(10px); }
     </style>
   </head>
   <body>
@@ -88,13 +88,13 @@
       });
 
       socket.on('users typing', function(usersTyping){
-        console.log(usersTyping)
-        if(usersTyping.length == 0){
+        console.log(usersTyping)        
+        var removedThisUser = usersTyping.filter(user => user.id !== socket.id)
+        if(removedThisUser.length == 0){
           usersTypingSpan.style.display = 'none'
         }else{
           usersTypingSpan.style.display = 'flex'
         }
-        var removedThisUser = usersTyping.filter(user => user.id !== socket.id)
         var usernamesTyping = removedThisUser.map(user => user.nickname).join(', ')
         usernamesTyping += " está(ão) digitando..."
         usersTypingSpan.textContent = usernamesTyping
